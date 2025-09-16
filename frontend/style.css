@@ -1,0 +1,122 @@
+:root {
+    --font-heading: 'EB Garamond', serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --color-ols: #6f4e37;
+    --color-mlp: #2d2d2d;
+    --color-attention: #4a4a4a;
+    --color-background: #faf8f2;
+    --color-surface: #ffffff;
+
+    --wc-color1: #6f4e37;
+    --wc-color2: #a68d7c;
+    --wc-color3: #6a7354;
+    --wc-color4: #8f9779;
+}
+
+body {
+    font-family: var(--font-body);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--color-background);
+    color: var(--color-mlp);
+    margin: 0;
+    box-sizing: border-box;
+}
+
+header {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-background);
+}
+
+.header-title {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-attention);
+}
+
+#user-info {
+    font-family: var(--font-body);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    color: var(--color-attention);
+}
+
+#container {
+    text-align: center;
+    background: var(--color-surface);
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+h1 {
+    font-family: var(--font-heading);
+    font-size: 3em;
+    margin-bottom: 1em;
+    color: var(--color-attention);
+}
+
+#user-input {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #dddfe2;
+    border-radius: 6px;
+    font-size: 1em;
+    font-family: var(--font-body);
+    margin-bottom: 4em;
+}
+
+button {
+    font-family: var(--font-body);
+    font-weight: bold;
+    padding: 10px 20px;
+    font-size: 1em;
+    color: var(--color-ols);
+    background-color: transparent;
+    border: 2px solid var(--color-ols);
+    border-radius: 6px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+    background-color: var(--color-ols);
+    color: var(--color-surface);
+}
+
+.subtitle { 
+    color: #606770; 
+    font-size: 0.9em; 
+}
+
+.hidden {
+    display: none !important;
+}
+
+#next-step { 
+    margin-top: 30px; 
+}
+
+footer {
+    width: 100%;
+    padding: 40px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.footer-logo {
+    height: 40px;
+    width: auto;
+    opacity: 0.5;
+}

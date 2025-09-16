@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lesago</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+
+</head>
+<body>
+    <header>
+        <div class="header-title">lesago</div>
+        <div id="auth-container">
+            <div id="user-info" class="hidden">
+                <span id="user-name"></span>
+                <button id="logout-button">Keluar</button>
+            </div>
+            <button id="login-button">Masuk dengan Google</button>
+        </div>
+    </header>
+
+    <div id="container" class="hidden">
+        <div id="submission-view">
+            <h1>Masa depan bersama AI ...</h1>
+            <form id="submission-form">
+                <input type="text" id="user-input" placeholder="(isi dengan satu kata)" required autocomplete="off">
+                <button type="submit">Tampilkan</button>
+            </form>            
+        </div>
+
+        <div id="wordcloud-view" class="hidden">
+            <h1>Masa Depan Bersama AI:</h1>
+            <canvas id="wordcloud-canvas" width="600" height="400"></canvas>
+            <div id="next-step">
+                <p>Gimanapun perasaan kamu, memahami AI mempersiapkanmu untuk masa depan.</p>
+                <button onclick="window.location.href='/learning.html'">Mulai Belajar</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <img src="/lesago_logo.png" alt="Lesago Logo" class="footer-logo">
+    </footer>
+    
+    <script type="module" src="/main.js"></script>
+</body>
+</html>
