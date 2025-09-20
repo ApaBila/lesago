@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaringan Otak - lesago</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+</head>
+<body id="page-mlp">
+    <header>
+        <div class="header-title" style="cursor: pointer;" onclick="window.location.href='../../index.html'">lesago</div>
+        <div id="auth-container">
+            <div id="user-info" class="hidden">
+                <span id="user-name"></span>
+                <button id="logout-button">Keluar</button>
+            </div>
+            <button id="login-button">Masuk dengan Google</button>
+        </div>
+    </header>
+
+    <div class="module-container">
+        <h1 class="content-block">Model II: Meniru Jaringan Otak</h1>
+        
+        <div class="explanation-container content-block">
+            <h2>Dari Garis Lurus ke Jaringan Kompleks</h2>
+            <p>Model sebelumnya hanya bisa belajar hubungan linear. Tapi bagaimana jika data tidak bisa dipisahkan dengan satu garis lurus? Di sini kita menggunakan <strong>Multilayer Perceptron (MLP)</strong>, sebuah model yang terinspirasi dari jaringan neuron di otak. Dengan menambahkan 'lapisan' tersembunyi, model ini bisa belajar pola yang jauh lebih rumit.</p>
+        </div>
+
+        <div id="mlp-container" class="content-block">
+            <div id="mlp-controls">
+            </div>
+            <div id="mlp-visualization"></div>
+        </div>
+
+    </div>
+
+    <footer>
+        <img src="../../lesago_logo.png" alt="Lesago Logo" class="footer-logo">
+    </footer>
+    
+    <script type="module" src="../../main.js"></script>
+    <script type="module" src="mlp-playground.js"></script>
+</body>
+</html>
