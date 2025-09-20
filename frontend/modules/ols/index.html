@@ -40,7 +40,7 @@
 
         <div class="equation-box content-block">
             <h3>Persamaan Garis (Prediksi):</h3>
-            <p id="equation">Y = mX + b</p>
+            <p id="equation">Yhat = mX + b</p>
             <p id="sse">Tambahkan setidaknya 2 titik untuk menghitung.</p>
         </div>
 
@@ -49,6 +49,23 @@
         </div>
         
         <button id="reset-button" class="content-block">Reset Grafik</button>
+
+        <div class="divider content-block"></div>
+
+        <div class="explanation-container content-block">
+            <h2>Pandangan Kedua: Proyeksi Vektor</h2>
+            <p>Bagaimana beberapa titik data menjadi vektor? Anggap setiap titik data adalah sebuah "dimensi". Jika kamu punya 2 titik, kamu berada di ruang 2-dimensi. Vektor <strong>kenyataan</strong> (Yi, coklat) dibentuk oleh semua nilai Y aslimu. Vektor <strong>model</strong> (X, biru) dibentuk oleh semua nilai X aslimu.</p>
+            <p>Vektor X ini membentuk sebuah "ruang model" (bidang abu-abu)—semua kemungkinan prediksi harus berada di ruang ini. Prediksi kita (<strong>Yhat</strong>, merah) adalah "bayangan" atau proyeksi terdekat dari vektor Yi ke ruang X. Jarak antara kenyataan dan bayangan ini adalah <strong>Error</strong> (hitam).</p>
+            <p class="instruction">(Gunakan mouse untuk memutar, dan scroll untuk zoom pada visualisasi 3D di bawah)</p>
+        </div>
+
+        <div id="projectionScene" class="chart-container content-block"></div>
+
+        <div id="pythagoras-box" class="equation-box content-block">
+            <h3>Teorema Pythagoras di Ruang Multi-Dimensi:</h3>
+            <p id="pythagoras-result">Tambahkan setidaknya 2 titik untuk menghitung.</p>
+        </div>
+
     </div>
 
     <footer>

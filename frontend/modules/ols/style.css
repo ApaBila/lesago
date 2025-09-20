@@ -82,3 +82,14 @@
     margin-top: 2.5em;
     width: 100%;
 }
+
+.divider {
+    height: 1px;
+    background-color: #e0dccc;
+    margin: 4em auto;
+}
+
+#projectionScene {
+    min-height: 500px;
+    cursor: move;
+}
