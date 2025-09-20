@@ -1,0 +1,67 @@
+#learning-container {
+    width: 100%;
+    max-width: 960px;
+    padding: 20px 40px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+#learning-container .subtitle {
+    font-size: 1.2em;
+    color: var(--color-attention);
+    margin-top: 0;
+    margin-bottom: 3em;
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 2.2em;
+    color: var(--color-attention);
+    margin-top: 2.5em;
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+.module-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    text-align: left;
+}
+
+.module-card {
+    background-color: var(--color-surface);
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 1px solid #e0dccc;
+    display: flex;
+    flex-direction: column;
+}
+
+.module-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.5em;
+    margin: 0 0 10px 0;
+    color: var(--color-ols);
+}
+
+.module-card p {
+    margin: 0 0 20px 0;
+    line-height: 1.6;
+    color: var(--color-mlp);
+    flex-grow: 1;
+}
+
+.status-badge {
+    align-self: flex-start;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.status-badge.coming-soon {
+    background-color: #e8e4d9;
+    color: #a68d7c;
+}

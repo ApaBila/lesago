@@ -1,9 +1,5 @@
 # lesago
 
-Currently `lesago` is an educational website to explain the models behind current AI systems, building up from simple linear models, to MLP, then attention and thus LLMs (3 modules). 
-The project is built on a serverless Google Cloud architecture and features a brand identity centered around the theme of "fortresses of knowledge." 
-Whatever our feelings, understanding AI can help us be better informed users, researchers, and decision makers.
-
 ## Tech Stack
 
 -   **Frontend:** Vite (Vanilla JavaScript)
@@ -103,5 +99,3 @@ npm run deploy
 ```
 
 This command builds the site and deploys it. This process prevents broken sites during upload and ensures users get the latest version without caching issues.
-
-The live site is available at: `https://lesago.web.app`

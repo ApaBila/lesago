@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar - lesago</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="learning.css">
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-title" style="cursor: pointer;" onclick="window.location.href='./index.html'">lesago</div>
+        <div id="auth-container">
+            <div id="user-info" class="hidden">
+                <span id="user-name"></span>
+                <button id="logout-button">Keluar</button>
+            </div>
+            <button id="login-button">Masuk dengan Google</button>
+        </div>
+    </header>
+
+    <div id="learning-container">
+        <h1>Benteng Pengetahuan</h1>
+        <p class="subtitle">Modul interaktif untuk memahami cara kerja model bahasa.</p>
+        
+        <div class="module-grid">
+            <div class="module-card">
+                <h3>OLS: Regresi Linear</h3>
+                <p>Dasar dari prediksi: memahami hubungan linear dalam data.</p>
+                <div class="status-badge coming-soon">Nantikan</div>
+            </div>
+            <div class="module-card">
+                <h3>MLP: Jaringan Saraf Tiruan</h3>
+                <p>Membuka kompleksitas dengan lapisan dan aktivasi non-linear.</p>
+                <div class="status-badge coming-soon">Nantikan</div>
+            </div>
+            <div class="module-card">
+                <h3>Attention: Mekanisme Perhatian</h3>
+                <p>Fokus pada yang penting: inti dari model Transformer.</p>
+                <div class="status-badge coming-soon">Nantikan</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Tantangan & Etika</h2>
+         <div class="module-grid">
+            <div class="module-card">
+                <h3>Reward Hacking</h3>
+                <p>Ketika AI mencapai tujuan dengan cara yang tidak terduga.</p>
+                <div class="status-badge coming-soon">Nantikan</div>
+            </div>
+            <div class="module-card">
+                <h3>Agency & Alignment</h3>
+                <p>Memastikan tujuan AI selaras dengan nilai-nilai kemanusiaan.</p>
+                <div class="status-badge coming-soon">Nantikan</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <img src="/lesago_logo.png" alt="Lesago Logo" class="footer-logo">
+    </footer>
+    
+    <script type="module" src="/main.js"></script>
+</body>
+</html>

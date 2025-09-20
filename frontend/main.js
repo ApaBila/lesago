@@ -57,32 +57,35 @@ auth.onAuthStateChanged(async (user) => {
         loginButton.classList.add('hidden');
         userName.textContent = `Selamat datang, ${user.displayName}`;
 
-        const storedWordCloud = sessionStorage.getItem('wordCloudData');
-        if (storedWordCloud) {
-            drawWordCloud(JSON.parse(storedWordCloud));
-        }
+        if (mainContainer && userInput) {
+            const storedWordCloud = sessionStorage.getItem('wordCloudData');
 
-        try {
-            const token = await user.getIdToken();
-            const response = await fetch(`${API_BASE_URL}/getMySubmission`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                userInput.value = data.text || '';
+            if (storedWordCloud) {
+                drawWordCloud(JSON.parse(storedWordCloud));
+                mainContainer.classList.remove('hidden');
+            } else {
+                try {
+                    const token = await user.getIdToken();
+                    const response = await fetch(`${API_BASE_URL}/getMySubmission`, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    if (response.ok) {
+                        const data = await response.json();
+                        userInput.value = data.text || '';
+                    }
+                } catch (error) {
+                    console.error("Could not fetch last submission:", error);
+                } finally {
+                    mainContainer.classList.remove('hidden');
+                }
             }
-        } catch (error) {
-            console.error("Could not fetch last submission:", error);
         }
-        
-        mainContainer.classList.remove('hidden');
-
     } else {
         userInfo.classList.add('hidden');
         loginButton.classList.remove('hidden');
         userName.textContent = '';
-        mainContainer.classList.add('hidden');
-        userInput.value = '';
+        if (mainContainer) mainContainer.classList.add('hidden');
+        if (userInput) userInput.value = '';
     }
 });
 
@@ -98,46 +101,47 @@ logoutButton.addEventListener('click', () => {
     auth.signOut();
 });
 
-submissionForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const text = userInput.value.trim();
-    if (!text) return;
+if (submissionForm) {
+    submissionForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const text = userInput.value.trim();
+        if (!text) return;
 
-    const user = auth.currentUser;
-    if (!user) {
-        alert("Kamu harus login untuk mencoba.");
-        return;
-    }
-
-    const submitButton = submissionForm.querySelector('button[type="submit"]');
-
-    try {
-        submitButton.disabled = true;
-        submitButton.textContent = 'Memproses...';
-
-        const token = await user.getIdToken();
-        const response = await fetch(`${API_BASE_URL}/addSubmission`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ text: text })
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to submit and get word cloud data');
+        const user = auth.currentUser;
+        if (!user) {
+            return;
         }
 
-        const wordList = await response.json();
-        sessionStorage.setItem('wordCloudData', JSON.stringify(wordList));
-        drawWordCloud(wordList);
-        
-    } catch (error) {
-        console.error('Error:', error);
-        alert('Terjadi kesalahan. Silakan coba lagi.');
-    } finally {
-        submitButton.disabled = false;
-        submitButton.textContent = 'Tampilkan';
-    }
-});
+        const submitButton = submissionForm.querySelector('button[type="submit"]');
+
+        try {
+            submitButton.disabled = true;
+            submitButton.textContent = 'Memproses...';
+
+            const token = await user.getIdToken();
+            const response = await fetch(`${API_BASE_URL}/addSubmission`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ text: text })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to submit and get word cloud data');
+            }
+
+            const wordList = await response.json();
+            sessionStorage.setItem('wordCloudData', JSON.stringify(wordList));
+            drawWordCloud(wordList);
+            
+        } catch (error) {
+            console.error('Error:', error);
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Tampilkan';
+        }
+    });
+}
+
