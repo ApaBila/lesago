@@ -31,11 +31,18 @@
 }
 
 #mlp-container {
+    display: flex;
+    gap: 20px;
     background-color: var(--color-surface);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     border: 1px solid #e0dccc;
+}
+
+#data-visualization, #network-visualization {
+    flex: 1;
+    min-width: 0;
 }
 
 #mlp-visualization svg {
@@ -119,4 +126,24 @@
 .main-actions button {
     width: auto;
     padding: 8px 16px;
+}
+
+.main-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#play-pause-button.playing {
+    background-color: var(--color-ols);
+    color: var(--color-surface);
+}
+
+.epoch-counter {
+    font-family: monospace;
+    font-size: 0.9em;
+    color: var(--color-attention);
+    padding: 8px 16px;
+    background-color: var(--color-background);
+    border-radius: 5px;
 }
