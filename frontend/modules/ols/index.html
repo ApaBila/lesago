@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="id">
-<header>
-    <div class="header-left">
-        <div class="header-title" style="cursor: pointer;" onclick="window.location.href='../../index.html'">lesago</div>
-        <button id="back-to-learn-btn" onclick="window.location.href='../../learning.html'">Kembali ke Modul</button>
-    </div>
-    <div id="auth-container">
-        <div id="user-info" class="hidden">
-            <span id="user-name"></span>
-            <button id="logout-button">Keluar</button>
-        </div>
-        <button id="login-button">Masuk dengan Google</button>
-    </div>
-</header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garis Lurus - lesago</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+</head>
 <body id="page-ols">
     <header>
         <div class="header-title" style="cursor: pointer;" onclick="window.location.href='../../index.html'">lesago</div>
@@ -26,18 +28,27 @@
     </header>
 
     <div class="module-container">
-        <h1>Modul 1: Meramal dengan Kali-Kali dan Tambah-Tambah</h1>
-        <div class="simulation-container">
-            <div class="chart-container">
-                <canvas id="olsChart"></canvas>
-            </div>
-            <div class="explanation-container">
-                <h2>Selamat Datang di Dunia Multi-Variabel</h2>
-                <p>Di dunia nyata, kita jarang hanya menghitung satu hal. Kita sering ingin tahu bagaimana satu hal berhubungan dengan hal lain. Misalnya, apakah jam belajar lebih banyak (variabel X) menyebabkan nilai ujian lebih tinggi (variabel Y)?</p>
-                <p>Model Linear Sederhana mencoba menemukan hubungan ini dengan menggambar sebuah garis lurus melalui titik-titik data. Garis ini adalah "prediksi" kita.</p>
-                <p>Klik pada grafik di sebelah kiri untuk menambahkan titik data Anda sendiri dan lihat bagaimana garisnya mencoba menyesuaikan diri!</p>
-            </div>
+        <h1 class="content-block">Model I: Persamaan Garis Lurus</h1>
+        
+        <div class="explanation-container content-block">
+            <h2>Selamat datang di dunia dengan lebih dari satu hal!</h2>
+            <p>Bagaimana kamu belajar menghitung? Biasanya dalam <em>satu dimensi</em>. 1 jam... 2 jam... 3 jam... Tapi dunia nyata tidak sesederhana itu. Ada lebih dari satu hal dan kita ingin menghubungkannya! 
+            Misalnya, kalau kamu menambah jam belajar (peubah X) apakah nilai ujianmu (peubah Y) bertambah? Model sederhana untuk menjelaskan hubungan ini berupa <strong>persamaan garis lurus.</strong>
+            Paling sederhananya, jika kita anggap 1 jam belajar meningkatkan nilai ujian sebesar 1 poin, maka kita bisa menuliskan hubungan ini sebagai persamaan garis lurus <code>Y = X</code> dimana <code>m = 1</code> dan <code>b = 0</code>.</p>
+            <p>Data dunia nyata biasanya tidak serapi itu! Akan ada jarak antara ramalan <code>Yhat</code> (<code>Y</code> di garis) dan kenyataan <code>Yi</code> (<code>Y</code> titik data) yang dinamakan <strong>error</strong>. Model yang baik <strong>Total Error</strong>-nya sekecil mungkin.</p>
         </div>
+
+        <div class="equation-box content-block">
+            <h3>Persamaan Garis (Prediksi):</h3>
+            <p id="equation">Y = mX + b</p>
+            <p id="sse">Tambahkan setidaknya 2 titik untuk menghitung.</p>
+        </div>
+
+        <div class="chart-container content-block">
+            <canvas id="olsChart"></canvas>
+        </div>
+        
+        <button id="reset-button" class="content-block">Reset Grafik</button>
     </div>
 
     <footer>
@@ -45,6 +56,6 @@
     </footer>
     
     <script type="module" src="../../main.js"></script>
-    <script type="module" src="main.js"></script>
+    <script type="module" src="ols-chart.js"></script>
 </body>
 </html>

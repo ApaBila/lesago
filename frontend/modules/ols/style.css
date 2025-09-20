@@ -1,33 +1,68 @@
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-#back-to-learn-btn {
-    padding: 8px 16px;
-    font-size: 0.9em;
-    border-width: 2px;
-    margin-left: 0;
-}
-
 .module-container {
     width: 100%;
-    max-width: 1200px;
     padding: 20px 40px;
     box-sizing: border-box;
 }
 
 .module-container h1 {
     text-align: center;
+    font-size: 2.8em;
+    margin-bottom: 1em;
 }
 
-.simulation-container {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 40px;
-    align-items: flex-start;
-    margin-top: 2em;
+.content-block {
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.explanation-container {
+    text-align: center;
+    line-height: 1.7;
+    margin-bottom: 2.5em;
+}
+
+.explanation-container h2 {
+    font-size: 1.5em;
+    margin-bottom: 1em;
+}
+
+.explanation-container p {
+    color: var(--color-attention);
+}
+
+.explanation-container strong {
+    color: var(--color-ols);
+    font-weight: 700;
+}
+
+.equation-box {
+    margin-bottom: 2.5em;
+    padding: 20px;
+    background-color: #fdfbf7;
+    border: 1px solid #e0dccc;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.equation-box h3 {
+    margin: 0 0 10px 0;
+    font-family: var(--font-heading);
+    color: var(--color-ols);
+}
+
+#equation {
+    font-family: monospace;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: var(--color-mlp);
+    margin: 0 0 5px 0;
+}
+
+#sse {
+    font-size: 0.9em;
+    color: var(--color-attention);
+    margin: 0;
 }
 
 .chart-container {
@@ -38,13 +73,12 @@
     border: 1px solid #e0dccc;
 }
 
-.explanation-container {
-    padding: 20px;
+#olsChart {
+    cursor: crosshair;
 }
 
-.explanation-container h2 {
-    font-family: var(--font-heading);
-    color: var(--color-ols);
-    font-size: 1.8em;
-    margin-top: 0;
+#reset-button {
+    display: block;
+    margin-top: 2.5em;
+    width: 100%;
 }
