@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<header>
+    <div class="header-left">
+        <div class="header-title" style="cursor: pointer;" onclick="window.location.href='../../index.html'">lesago</div>
+        <button id="back-to-learn-btn" onclick="window.location.href='../../learning.html'">Kembali ke Modul</button>
+    </div>
+    <div id="auth-container">
+        <div id="user-info" class="hidden">
+            <span id="user-name"></span>
+            <button id="logout-button">Keluar</button>
+        </div>
+        <button id="login-button">Masuk dengan Google</button>
+    </div>
+</header>
+<body id="page-ols">
+    <header>
+        <div class="header-title" style="cursor: pointer;" onclick="window.location.href='../../index.html'">lesago</div>
+        <div id="auth-container">
+            <div id="user-info" class="hidden">
+                <span id="user-name"></span>
+                <button id="logout-button">Keluar</button>
+            </div>
+            <button id="login-button">Masuk dengan Google</button>
+        </div>
+    </header>
+
+    <div class="module-container">
+        <h1>Modul 1: Meramal dengan Kali-Kali dan Tambah-Tambah</h1>
+        <div class="simulation-container">
+            <div class="chart-container">
+                <canvas id="olsChart"></canvas>
+            </div>
+            <div class="explanation-container">
+                <h2>Selamat Datang di Dunia Multi-Variabel</h2>
+                <p>Di dunia nyata, kita jarang hanya menghitung satu hal. Kita sering ingin tahu bagaimana satu hal berhubungan dengan hal lain. Misalnya, apakah jam belajar lebih banyak (variabel X) menyebabkan nilai ujian lebih tinggi (variabel Y)?</p>
+                <p>Model Linear Sederhana mencoba menemukan hubungan ini dengan menggambar sebuah garis lurus melalui titik-titik data. Garis ini adalah "prediksi" kita.</p>
+                <p>Klik pada grafik di sebelah kiri untuk menambahkan titik data Anda sendiri dan lihat bagaimana garisnya mencoba menyesuaikan diri!</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <img src="../../lesago_logo.png" alt="Lesago Logo" class="footer-logo">
+    </footer>
+    
+    <script type="module" src="../../main.js"></script>
+    <script type="module" src="main.js"></script>
+</body>
+</html>

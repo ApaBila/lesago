@@ -8,6 +8,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         learning: resolve(__dirname, 'learning.html'),
+        ols: resolve(__dirname, 'modules/ols/index.html'),
       },
     },
   },

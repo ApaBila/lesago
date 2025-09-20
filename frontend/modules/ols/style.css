@@ -1,0 +1,50 @@
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#back-to-learn-btn {
+    padding: 8px 16px;
+    font-size: 0.9em;
+    border-width: 2px;
+    margin-left: 0;
+}
+
+.module-container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px 40px;
+    box-sizing: border-box;
+}
+
+.module-container h1 {
+    text-align: center;
+}
+
+.simulation-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    align-items: flex-start;
+    margin-top: 2em;
+}
+
+.chart-container {
+    background-color: var(--color-surface);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 1px solid #e0dccc;
+}
+
+.explanation-container {
+    padding: 20px;
+}
+
+.explanation-container h2 {
+    font-family: var(--font-heading);
+    color: var(--color-ols);
+    font-size: 1.8em;
+    margin-top: 0;
+}

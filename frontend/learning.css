@@ -53,6 +53,11 @@
     flex-grow: 1;
 }
 
+.module-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
 .status-badge {
     align-self: flex-start;
     padding: 5px 12px;
