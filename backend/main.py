@@ -101,3 +101,23 @@ def getMySubmission(request):
             submission_text = submission_data.get('text', '')
 
     return jsonify({'text': submission_text}), 200, get_cors_headers()
+
+
+@functions_framework.http
+def getWordCloud(request):
+    if request.method == 'OPTIONS':
+        return '', 204, get_cors_headers()
+
+    aggregate_ref = db.collection('aggregates').document('word_counts')
+    word_counts_doc = aggregate_ref.get()
+
+    word_list = []
+    if word_counts_doc.exists:
+        doc_dict = word_counts_doc.to_dict()
+        all_counts = doc_dict.get('counts', {}) if doc_dict else {}
+        if all_counts:
+            sorted_words = sorted(all_counts.items(),
+                                  key=lambda item: item[1], reverse=True)
+            word_list = [[word, count] for word, count in sorted_words[:100]]
+
+    return jsonify(word_list), 200, get_cors_headers()
