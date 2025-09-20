@@ -76,7 +76,7 @@ function createVectorArrow(vector, color, origin = new THREE.Vector3(0, 0, 0)) {
     const length = vector.length();
     if (length < 0.001) return new THREE.Object3D();
     const dir = vector.clone().normalize();
-    return new THREE.ArrowHelper(dir, origin, length, color, length * 0.1, length * 0.05);
+    return new THREE.ArrowHelper(dir, origin, length, color, length * 0.15, length * 0.07);
 }
 
 function updateProjectionScene(points) {
@@ -90,11 +90,11 @@ function updateProjectionScene(points) {
 
     const xArr = points.map(p => p.x);
     const yArr = points.map(p => p.y);
-    const xVec = new THREE.Vector3(xArr[0], xArr[1], xArr[2]);
-    const yVec = new THREE.Vector3(yArr[0], yArr[1], yArr[2]).multiplyScalar(0.05);
-    
     const { m, b } = calculateOLS(points);
     const yHatArr = points.map(p => m * p.x + b);
+
+    const xVec = new THREE.Vector3(xArr[0], xArr[1], xArr[2]).multiplyScalar(0.05);
+    const yVec = new THREE.Vector3(yArr[0], yArr[1], yArr[2]).multiplyScalar(0.05);
     const yHatVec = new THREE.Vector3(yHatArr[0], yHatArr[1], yHatArr[2]).multiplyScalar(0.05);
 
     vectorY = createVectorArrow(yVec, new THREE.Color(getCssVariable('--color-ols')));
@@ -102,8 +102,8 @@ function updateProjectionScene(points) {
     const errorVec3 = new THREE.Vector3().subVectors(yVec, yHatVec);
     errorVector = createVectorArrow(errorVec3, new THREE.Color(getCssVariable('--color-attention')), yHatVec);
     
-    const interceptVec = new THREE.Vector3(1, 1, 1).normalize();
-    const planeNormal = new THREE.Vector3().crossVectors(xVec, interceptVec).normalize();
+    const interceptBasis = new THREE.Vector3(1, 1, 1).normalize();
+    const planeNormal = new THREE.Vector3().crossVectors(xVec, interceptBasis).normalize();
     
     const planeGeometry = new THREE.PlaneGeometry(15, 15);
     const planeMaterial = new THREE.MeshPhongMaterial({color: 0xcccccc, transparent: true, opacity: 0.3, side: THREE.DoubleSide});
