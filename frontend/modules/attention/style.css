@@ -36,3 +36,23 @@
     width: 100%;
     height: auto;
 }
+
+#controls-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.control-btn {
+    padding: 8px 12px;
+}
+.control-btn.active {
+    background-color: var(--color-ols);
+    color: var(--color-surface);
+    border-color: var(--color-ols);
+}

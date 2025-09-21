@@ -29,19 +29,27 @@
     </header>
 
     <div class="module-container">
-        <h1 class="content-block">Model III: Mekanisme Perhatian (Attention)</h1>
-        
+        <h1 class="content-block">Model III: Pola Perhatian (Attention Patterns)</h1>
+
         <div class="explanation-container content-block">
-            <h2>Dari Mana Konteks Berasal?</h2>
-            <p>Model sebelumnya memproses data secara independen. Mekanisme <strong>perhatian</strong> memungkinkan model untuk mempertimbangkan hubungan antara kata-kata dalam sebuah kalimat, memberi bobot pada kata-kata yang paling relevan untuk memahami konteks setiap kata. Ini adalah inti dari model Transformer.</p>
-            <p>Proses ini dapat dirumuskan sebagai: $Attention(Q, K, V) = \text{softmax}(\frac{QK^T}{\sqrt{d_k}})V$. Klik sebuah kata di bawah untuk melihat perhitungannya.</p>
+            <h2>Melihat ke Dalam Pikiran Model</h2>
+            <p>Pola-pola ini mengungkapkan "algoritma" yang telah dipelajari model. Pilih prompt dan lapisan yang berbeda untuk dijelajahi.</p>
         </div>
 
-        <div id="attention-container" class="content-block">
-            <div id="input-sentence"></div>
-            <div id="visualization-area"></div>
+        <div id="controls-container" class="content-block">
+            <div class="control-group">
+                <strong>Pilih Prompt:</strong>
+                <button class="control-btn active" data-prompt="prompt1">Induction</button>
+                <button class="control-btn" data-prompt="prompt2">Repeated Token</button>
+            </div>
+            <div class="control-group">
+                <strong>Pilih Lapisan:</strong>
+                <button class="control-btn" data-layer="0">Early Layer (0)</button>
+                <button class="control-btn active" data-layer="27">Late Layer (27)</button>
+            </div>
         </div>
 
+        <div id="vis-container" class="content-block"></div>
     </div>
 
     <footer>

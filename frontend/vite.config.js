@@ -2,6 +2,11 @@ import { defineConfig } from 'vite'
 import { resolve } from 'path'
 
 export default defineConfig({
+  resolve: {
+    alias: {
+      'circuitsvis': resolve(__dirname, 'node_modules/circuitsvis/dist/module/index.js'),
+    },
+  },
   base: './',
   build: {
     rollupOptions: {
