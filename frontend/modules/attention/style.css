@@ -1,0 +1,38 @@
+#attention-container {
+    background-color: var(--color-surface);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 1px solid #e0dccc;
+    min-height: 500px;
+}
+
+#input-sentence {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.token {
+    padding: 8px 12px;
+    background-color: #fdfbf7;
+    border: 1px solid #e0dccc;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: monospace;
+    font-size: 1.1em;
+    transition: all 0.2s ease-in-out;
+}
+
+.token:hover, .token.selected {
+    background-color: var(--color-ols);
+    color: var(--color-surface);
+    border-color: var(--color-ols);
+}
+
+#visualization-area {
+    width: 100%;
+    height: auto;
+}

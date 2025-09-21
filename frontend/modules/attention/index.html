@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perhatian - lesago</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+</head>
+<body id="page-attention">
+    <header>
+        <div class="header-title" style="cursor: pointer;" onclick="window.location.href='../../index.html'">lesago</div>
+        <div id="auth-container">
+            <div id="user-info" class="hidden">
+                <span id="user-name"></span>
+                <button id="logout-button">Keluar</button>
+            </div>
+            <button id="login-button">Masuk dengan Google</button>
+        </div>
+    </header>
+
+    <div class="module-container">
+        <h1 class="content-block">Model III: Mekanisme Perhatian (Attention)</h1>
+        
+        <div class="explanation-container content-block">
+            <h2>Dari Mana Konteks Berasal?</h2>
+            <p>Model sebelumnya memproses data secara independen. Mekanisme <strong>perhatian</strong> memungkinkan model untuk mempertimbangkan hubungan antara kata-kata dalam sebuah kalimat, memberi bobot pada kata-kata yang paling relevan untuk memahami konteks setiap kata. Ini adalah inti dari model Transformer.</p>
+            <p>Proses ini dapat dirumuskan sebagai: $Attention(Q, K, V) = \text{softmax}(\frac{QK^T}{\sqrt{d_k}})V$. Klik sebuah kata di bawah untuk melihat perhitungannya.</p>
+        </div>
+
+        <div id="attention-container" class="content-block">
+            <div id="input-sentence"></div>
+            <div id="visualization-area"></div>
+        </div>
+
+    </div>
+
+    <footer>
+        <img src="../../lesago_logo.png" alt="Lesago Logo" class="footer-logo">
+    </footer>
+    
+    <script type="module" src="../../main.js"></script>
+    <script type="module" src="attention-visualizer.js"></script>
+</body>
+</html>
