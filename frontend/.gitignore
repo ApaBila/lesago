@@ -23,7 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 .vite
-
+/public/*.json
 
 # Firebase
 .firebase/hosting.*.cache
