@@ -144,3 +144,7 @@ footer {
     height: auto !important;
     aspect-ratio: 600 / 400;
 }
+
+[data-link] {
+    cursor: pointer;
+}

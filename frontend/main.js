@@ -152,3 +152,12 @@ if (submissionForm) {
         }
     });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const navElements = document.querySelectorAll('[data-link]');
+    navElements.forEach(element => {
+        element.addEventListener('click', () => {
+            window.location.href = element.dataset.link;
+        });
+    });
+});

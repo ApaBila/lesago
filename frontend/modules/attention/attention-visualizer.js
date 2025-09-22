@@ -1,10 +1,11 @@
 import { render, AttentionPatterns } from 'circuitsvis';
 
 let currentPrompt = 'prompt1';
-let currentLayer = 27;
+let currentLayer = '0';
 
 const visContainer = document.getElementById('vis-container');
-const controlButtons = document.querySelectorAll('.control-btn');
+const promptButtons = document.querySelectorAll('.control-btn[data-prompt]');
+const layerButtons = document.querySelectorAll('.control-btn[data-layer]');
 
 async function loadAndRenderAttention() {
     if (!visContainer) return;
@@ -27,35 +28,26 @@ async function loadAndRenderAttention() {
     }
 }
 
-function handleControlClick(event) {
-    const clickedButton = event.currentTarget;
-    const { prompt, layer } = clickedButton.dataset;
-
-    if (prompt) {
-        currentPrompt = prompt;
-    }
-    if (layer) {
-        currentLayer = layer;
-    }
-
-    controlButtons.forEach(btn => {
-        const btnData = btn.dataset;
-        if ((btnData.prompt && btnData.prompt === currentPrompt) || (btnData.layer && btnData.layer === currentLayer)) {
-            btn.classList.add('active');
-        } else if (btnData.prompt || btnData.layer) {
-            const group = btnData.prompt ? 'prompt' : 'layer';
-            const currentGroupValue = btnData.prompt ? currentPrompt : currentLayer;
-            if (btnData[group] !== currentGroupValue) {
-                btn.classList.remove('active');
-            }
-        }
-    });
-
-    loadAndRenderAttention();
+function updateActiveButtons() {
+    promptButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.prompt === currentPrompt));
+    layerButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.layer === currentLayer));
 }
 
-controlButtons.forEach(button => {
-    button.addEventListener('click', handleControlClick);
+promptButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+        currentPrompt = e.currentTarget.dataset.prompt;
+        updateActiveButtons();
+        loadAndRenderAttention();
+    });
 });
 
+layerButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+        currentLayer = e.currentTarget.dataset.layer;
+        updateActiveButtons();
+        loadAndRenderAttention();
+    });
+});
+
+updateActiveButtons();
 loadAndRenderAttention();
