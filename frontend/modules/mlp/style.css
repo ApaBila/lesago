@@ -115,3 +115,9 @@
     background-color: var(--color-background);
     border-radius: 5px;
 }
+
+@media (max-width: 900px) {
+    #mlp-container {
+        flex-direction: column;
+    }
+}

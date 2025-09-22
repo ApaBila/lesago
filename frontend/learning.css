@@ -70,3 +70,13 @@
     background-color: #e8e4d9;
     color: #a68d7c;
 }
+
+@media (max-width: 768px) {
+  #learning-container {
+    padding: 20px;
+  }
+  
+  .module-grid {
+    grid-template-columns: 1fr;
+  }
+}

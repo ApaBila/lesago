@@ -32,9 +32,10 @@
     border-color: var(--color-ols);
 }
 
-#visualization-area {
+#vis-container {
     width: 100%;
-    height: auto;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 #controls-container {
@@ -55,4 +56,12 @@
     background-color: var(--color-ols);
     color: var(--color-surface);
     border-color: var(--color-ols);
+}
+
+@media (max-width: 768px) {
+  #controls-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
 }

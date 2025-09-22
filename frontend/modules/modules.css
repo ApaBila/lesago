@@ -35,3 +35,14 @@
     color: var(--module-theme-color, var(--color-attention));
     font-weight: 700;
 }
+
+@media (max-width: 768px) {
+    .module-container {
+        padding: 20px;
+    }
+
+    .content-block {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}

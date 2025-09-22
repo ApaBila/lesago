@@ -120,3 +120,15 @@ footer {
     width: auto;
     opacity: 0.5;
 }
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2.2em;
+  }
+}
