@@ -20,10 +20,20 @@ function drawWordCloud(wordList) {
 
     if (!submissionView || !wordcloudView || !canvas) return;
 
-    submissionView.classList.add('hidden');
-    wordcloudView.classList.remove('hidden');
-
     if (wordList && wordList.length > 0) {
+        submissionView.classList.add('hidden');
+        wordcloudView.classList.remove('hidden');
+
+        const availableWidth = canvas.parentElement.clientWidth;
+        
+        if (availableWidth > 0) {
+            canvas.width = availableWidth;
+            canvas.height = (availableWidth * 400) / 600;
+        } else {
+            canvas.width = 600;
+            canvas.height = 400;
+        }
+
         const brandColors = getCssVariables(['--wc-color1', '--wc-color2', '--wc-color3', '--wc-color4']);
         WordCloud(canvas, {
             list: wordList,
@@ -57,37 +67,36 @@ auth.onAuthStateChanged(async (user) => {
 
         if (currentPageId === 'page-index') {
             const mainContainer = document.getElementById('container');
-            const userInput = document.getElementById('user-input');
-            const storedWordCloud = sessionStorage.getItem('wordCloudData');
+            const submissionView = document.getElementById('submission-view');
+            const wordcloudView = document.getElementById('wordcloud-view');
 
-            const fetchMySubmission = async () => {
+            const initializeView = async () => {
                 try {
                     const token = await user.getIdToken();
                     const response = await fetch(`${API_BASE_URL}/getMySubmission`, { headers: { 'Authorization': `Bearer ${token}` } });
-                    if (response.ok) {
-                        const data = await response.json();
-                        userInput.value = data.text || '';
+
+                    if (!response.ok) throw new Error('Could not check submission status.');
+
+                    const data = await response.json();
+
+                    if (data && data.text) {
+                        const wordCloudResponse = await fetch(`${API_BASE_URL}/getWordCloud`);
+                        if (!wordCloudResponse.ok) throw new Error('Could not fetch word cloud.');
+                        const wordList = await wordCloudResponse.json();
+                        drawWordCloud(wordList);
+                    } else {
+                        submissionView.classList.remove('hidden');
+                        wordcloudView.classList.add('hidden');
                     }
                 } catch (error) {
-                    console.error("Could not fetch last submission:", error);
+                    console.error("Error initializing view:", error);
+                    submissionView.classList.remove('hidden');
+                    wordcloudView.classList.add('hidden');
+                } finally {
+                    mainContainer.classList.remove('hidden');
                 }
             };
-            fetchMySubmission();
-
-            if (storedWordCloud) {
-                drawWordCloud(JSON.parse(storedWordCloud));
-            } else {
-                try {
-                    const response = await fetch(`${API_BASE_URL}/getWordCloud`);
-                    const wordList = await response.json();
-                    if (wordList && wordList.length > 0) {
-                        drawWordCloud(wordList);
-                    }
-                } catch (error) {
-                    console.error("Could not fetch initial word cloud:", error);
-                }
-            }
-            mainContainer.classList.remove('hidden');
+            initializeView();
         }
     } else {
         userInfo.classList.add('hidden');

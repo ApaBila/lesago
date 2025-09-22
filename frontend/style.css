@@ -132,3 +132,15 @@ footer {
     font-size: 2.2em;
   }
 }
+
+#wordcloud-view {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#wordcloud-canvas {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 600 / 400;
+}
