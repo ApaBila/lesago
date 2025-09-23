@@ -18,7 +18,7 @@
 </head>
 <body id="page-ols">
     <header>
-        <div class="header-title" data-link="../../index.html">lesago</div>
+        <div class="header-title" data-link="../../learning.html">lesago</div>
         <div id="auth-container">
             <div id="user-info" class="hidden">
                 <span id="user-name"></span>
@@ -33,15 +33,17 @@
         
         <div class="explanation-container content-block">
             <h2>Selamat datang di dunia dengan lebih dari satu hal!</h2>
-            <p>Bagaimana kamu belajar menghitung? Biasanya dalam <em>satu dimensi</em>. 1 jam... 2 jam... 3 jam... Tapi dunia nyata tidak sesederhana itu. Ada lebih dari satu hal dan kita ingin menghubungkannya! 
-            Misalnya, kalau kamu menambah jam belajar (peubah X) apakah nilai ujianmu (peubah Y) bertambah? Model sederhana untuk menjelaskan hubungan ini berupa <strong>persamaan garis lurus.</strong>
-            Paling sederhananya, jika kita anggap 1 jam belajar meningkatkan nilai ujian sebesar 1 poin, maka kita bisa menuliskan hubungan ini sebagai persamaan garis lurus <code>Y = X</code> dimana <code>m = 1</code> dan <code>b = 0</code>.</p>
-            <p>Data dunia nyata biasanya tidak serapi itu! Akan ada jarak antara ramalan <code>Yhat</code> (<code>Y</code> di garis) dan kenyataan <code>Yi</code> (<code>Y</code> titik data) yang dinamakan <strong>error</strong>. Model yang baik <strong>Total Error</strong>-nya sekecil mungkin.</p>
+            <p>Bagaimana kamu belajar menghitung?</p> 
+            <p>Biasanya dalam <em>satu dimensi</em>. 1 jam... 2 jam... 3 jam... Tapi dunia nyata tidak sesederhana itu. Ada lebih dari satu hal dan kita ingin menghubungkan hal-hal itu satu sama lain.</p>
+            <p>Misalnya, kalau kamu menambah jam belajar (peubah X) apakah nilai ujianmu (peubah Y) akan bertambah?
+            Paling sederhananya, jika kita anggap 1 jam belajar meningkatkan nilai ujian sebesar 1 poin, maka kita bisa menuliskan hubungan ini sebagai <strong>persamaan garis lurus</strong>: </p>
+            <p><code>Ytopi = X</code> dengan <code>m = 1</code> dan <code>b = 0</code>.</p>
+            <p>Mari mencoba menambahkan titik data untuk hubungan tersebut.</p>
         </div>
 
         <div class="equation-box content-block">
-            <h3>Persamaan Garis (Prediksi):</h3>
-            <p id="equation">Yhat = mX + b</p>
+            <h3>Persamaan Garis dari Data:</h3>
+            <p id="equation">Ytopi = mX + b</p>
             <p id="sse">Tambahkan setidaknya 2 titik untuk menghitung.</p>
         </div>
 
@@ -55,17 +57,35 @@
 
         <div class="explanation-container content-block">
             <h2>Pandangan Kedua: Proyeksi Vektor</h2>
-            <p>Bagaimana beberapa titik data menjadi vektor? Anggap setiap titik data adalah sebuah "dimensi". Jika kamu punya 2 titik, kamu berada di ruang 2-dimensi. Vektor <strong>kenyataan</strong> (Yi, coklat) dibentuk oleh semua nilai Y aslimu. Vektor <strong>model</strong> (X, biru) dibentuk oleh semua nilai X aslimu.</p>
-            <p>Vektor X ini membentuk sebuah "ruang model" (bidang abu-abu)—semua kemungkinan prediksi harus berada di ruang ini. Prediksi kita (<strong>Yhat</strong>, merah) adalah "bayangan" atau proyeksi terdekat dari vektor Yi ke ruang X. Jarak antara kenyataan dan bayangan ini adalah <strong>Error</strong> (hitam).</p>
-            <p class="instruction">(Gunakan mouse untuk memutar, dan scroll untuk zoom pada visualisasi 3D di bawah)</p>
+            <p>Perhatikan, ada jarak antara ramalan <code>Ŷ</code> (nilai Y di garis) dan kenyataan <code>Y</code> (nilai Y data asli) yang dinamakan <strong>error</strong>. Model yang baik adalah model yang <strong>Total Error</strong>-nya sekecil mungkin.</p>
+            <p>Untuk melihat error ini dengan lebih jelas, kita akan memisahkan titik-titik (X, Y) menjadi vektor X dan vektor Y.</p>
+            <p>Vektor X terdiri dari semua nilai X. Bayangkan semua kombinasi perkalian <code>m</code> terhadap X dan penambahan <code>b</code> ini membentuk sebuah ruang model (<strong>bidang abu-abu</strong>). Vektor Y asli adalah panah coklat. Panah error (<strong>hitam</strong>) akan paling kecil ketika ia <strong>tegak lurus</strong> dengan <strong>bidang abu-abu</strong> itu sendiri. Artinya, prediksi terbaik kita adalah titik di bidang abu-abu yang terdekat dengan ujung panah Y asli.</p>
         </div>
 
         <div id="projectionScene" class="chart-container content-block"></div>
 
-        <div id="pythagoras-box" class="equation-box content-block">
+        <!-- <div id="pythagoras-box" class="equation-box content-block">
             <h3>Teorema Pythagoras di Ruang Multi-Dimensi:</h3>
             <p id="pythagoras-result">Tambahkan setidaknya 2 titik untuk menghitung.</p>
+        </div> -->
+
+        <div class="explanation-container content-block">
+            <p>Bahkan jika Xnya lebih dari satu, kita tetap dapat menggunakan intuisi yang sama. Bagaimana caranya menambahkan dan mengalikan semua X tersebut sehingga mendekati Y?</p>
         </div>
+
+        <div class="divider content-block"></div>
+
+        <div class="explanation-container content-block">
+            <h2>Materi Lanjutan untuk Praktisi: Mencari Persamaan Garis Lurus dengan Total Error Terkecil</h2>
+            <div style="text-align: left;"> 
+            <ul>
+                <li>Matriks Aljabar => dengan rumus proyeksi ortogonal (Pythagoras)</li>
+                <li>Kalkulus => dengan turunan fungsi error</li>
+                <li>Statistika => dengan estimasi peluang maksimum (MLE)</li>
+            </ul>
+            </div>
+        </div>
+
 
     </div>
 

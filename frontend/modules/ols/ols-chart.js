@@ -22,7 +22,11 @@ function calculateOLS(points) {
     for (const p of points) {
         sumX += p.x; sumY += p.y; sumXY += p.x * p.y; sumXX += p.x * p.x;
     }
-    const m = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+    const denominator = n * sumXX - sumX * sumX;
+    if (Math.abs(denominator) < 1e-9) {
+        return { m: Infinity, b: undefined, sae: Infinity };
+    }
+    const m = (n * sumXY - sumX * sumY) / denominator;
     const b = (sumY - m * sumX) / n;
     let sae = 0;
     for (const p of points) {
@@ -55,10 +59,12 @@ const olsChart = new Chart(olsCanvas.getContext('2d'), {
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(getCssVariable('--color-background'));
-const camera = new THREE.PerspectiveCamera(50, projectionContainer.clientWidth / 500, 0.1, 1000);
+
+const camera = new THREE.PerspectiveCamera(50, projectionContainer.clientWidth / projectionContainer.clientHeight, 0.1, 1000);
 camera.position.set(5, 4, 10);
+
 const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(projectionContainer.clientWidth, 500);
+renderer.setSize(projectionContainer.clientWidth, projectionContainer.clientHeight);
 projectionContainer.appendChild(renderer.domElement);
 
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -84,13 +90,17 @@ function updateProjectionScene(points) {
 
     if (points.length < 3) {
         if(modelPlane) scene.remove(modelPlane);
-        document.getElementById('pythagoras-result').innerHTML = 'Tambahkan setidaknya 3 titik untuk visualisasi 3D.';
+        return;
+    }
+    
+    const { m, b } = calculateOLS(points);
+    if (!isFinite(m)) {
+        if(modelPlane) scene.remove(modelPlane);
         return;
     }
 
     const xArr = points.map(p => p.x);
     const yArr = points.map(p => p.y);
-    const { m, b } = calculateOLS(points);
     const yHatArr = points.map(p => m * p.x + b);
 
     const xVec = new THREE.Vector3(xArr[0], xArr[1], xArr[2]).multiplyScalar(0.05);
@@ -105,6 +115,11 @@ function updateProjectionScene(points) {
     const interceptBasis = new THREE.Vector3(1, 1, 1).normalize();
     const planeNormal = new THREE.Vector3().crossVectors(xVec, interceptBasis).normalize();
     
+    if (planeNormal.lengthSq() < 1e-9) {
+        if(modelPlane) scene.remove(modelPlane);
+        return; 
+    }
+    
     const planeGeometry = new THREE.PlaneGeometry(15, 15);
     const planeMaterial = new THREE.MeshPhongMaterial({color: 0xcccccc, transparent: true, opacity: 0.3, side: THREE.DoubleSide});
     modelPlane = new THREE.Mesh(planeGeometry, planeMaterial);
@@ -115,22 +130,21 @@ function updateProjectionScene(points) {
     const lenSqY = yVec.lengthSq();
     const lenSqYhat = yHatVec.lengthSq();
     const lenSqError = errorVec3.lengthSq();
-
-    document.getElementById('pythagoras-result').innerHTML = `
-        (Jarak Total)² = <strong>${lenSqY.toFixed(2)}</strong><br>
-        (Jarak Prediksi)² + (Jarak Error)² = ${lenSqYhat.toFixed(2)} + ${lenSqError.toFixed(2)} = <strong>${(lenSqYhat + lenSqError).toFixed(2)}</strong>
-    `;
 }
 
 function updateVisuals() {
     const { m, b, sae } = calculateOLS(dataPoints);
     regressionLine.length = 0;
-    if (dataPoints.length > 1) {
+    
+    if (m === Infinity) {
+        equationEl.textContent = 'Garis Vertikal Terdeteksi';
+        sseEl.innerHTML = '<span style="color: red;">Model tidak dapat dihitung karena X tidak bervariasi.</span>';
+    } else if (dataPoints.length > 1) {
         regressionLine.push({ x: 0, y: b }, { x: 100, y: m * 100 + b });
-        equationEl.textContent = `Yhat = ${m.toFixed(2)}X + ${b.toFixed(2)}`;
+        equationEl.textContent = `Ytopi = ${m.toFixed(2)}X + ${b.toFixed(2)}`;
         sseEl.textContent = `Total Error (Jumlah Jarak): ${sae.toFixed(2)}`;
     } else {
-        equationEl.textContent = 'Yhat = mX + b';
+        equationEl.textContent = 'Ytopi = mX + b';
         sseEl.textContent = 'Tambahkan setidaknya 2 titik untuk menghitung.';
     }
     olsChart.update();
@@ -176,9 +190,12 @@ resetButton.addEventListener('click', () => {
 });
 
 window.addEventListener('resize', () => {
+    if (!projectionContainer) return;
     const width = projectionContainer.clientWidth;
-    renderer.setSize(width, 500);
-    camera.aspect = width / 500;
+    const height = projectionContainer.clientHeight;
+    
+    renderer.setSize(width, height);
+    camera.aspect = width / height;
     camera.updateProjectionMatrix();
 });
 
@@ -190,4 +207,3 @@ function animate() {
     renderer.render(scene, camera);
 }
 animate();
-

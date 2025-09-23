@@ -54,4 +54,5 @@
 #projectionScene {
     min-height: 500px;
     cursor: move;
+    padding: 0;
 }
