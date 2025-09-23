@@ -33,8 +33,14 @@
         
         <div class="explanation-container content-block">
             <h2>Dari Garis Lurus ke Jaringan Kompleks</h2>
-            <p>Model sebelumnya hanya bisa belajar hubungan linear. Tapi bagaimana jika data tidak bisa dipisahkan dengan satu garis lurus? Di sini kita menggunakan <strong>Multilayer Perceptron (MLP)</strong>, sebuah model yang terinspirasi dari jaringan neuron di otak. Dengan menambahkan 'lapisan' tersembunyi, model ini bisa belajar pola yang jauh lebih rumit.</p>
-        </div>
+            <p>Model sebelumnya hanya dapat menyelesaikan sistem yang linear. Tapi bagaimana jika data tidak bisa dipisahkan dengan satu garis lurus? Di sini kita menggunakan <strong>Multilayer Perceptron (MLP)</strong>, sebuah model yang terinspirasi dari jaringan neuron di otak.</p>
+            Ada dua komponen yang membedakan MLP dari model sebelumnya:
+            <div style="text-align: left;">
+                <ul>
+                    <li><strong>Lapisan tersembunyi</strong>: Selain lapisan input dan output, MLP memiliki satu atau lebih lapisan tersembunyi di antaranya. Setiap lapisan terdiri dari beberapa neuron yang saling terhubung.</li>
+                    <li><strong>Fungsi aktivasi non-linear</strong>: Setiap neuron di lapisan tersembunyi menggunakan fungsi aktivasi non-linear (misalnya ReLU, sigmoid, tanh) untuk mengubah inputnya.</li>
+                </ul>
+            </div>
 
         <div id="mlp-controls" class="content-block"></div>
 

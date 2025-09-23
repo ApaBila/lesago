@@ -29,7 +29,7 @@ const pointsGroup = dataSvg.append('g');
 
 const networkSvg = networkVizContainer.append("svg").attr("viewBox", `0 0 ${vizSize} ${vizSize}`);
     
-const colorScale = d3.scaleDiverging([-1, 0, 1], ["rgba(166, 141, 124, 0.5)", getCssVariable('--color-background'), "rgba(143, 151, 121, 0.5)"]);
+const colorScale = d3.scaleDiverging([-1, 0, 1], ["rgba(143, 151, 121, 0.5)", getCssVariable('--color-background'), getCssVariable('--color-mlp')]);
 const xScale = d3.scaleLinear().domain([-5, 5]).range([0, vizSize]);
 const yScale = d3.scaleLinear().domain([-5, 5]).range([vizSize, 0]);
 

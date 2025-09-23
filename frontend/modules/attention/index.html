@@ -31,9 +31,19 @@
     <div class="module-container">
         <h1 class="content-block">Model III: Pola Perhatian (Attention Patterns)</h1>
 
+        <div class="content-block">
+            <img 
+                src="/transformer-decoder-intro.png" 
+                alt="Diagram arsitektur blok Transformer" 
+                class="transformer-diagram-img"
+            >
+        </div>
+        
+        <div id="transformer-diagram-container" class="content-block"></div>
+
         <div class="explanation-container content-block">
             <h2>Melihat ke Dalam Pikiran Model</h2>
-            <p>Pola-pola ini mengungkapkan "algoritma" yang telah dipelajari model. Pilih prompt dan lapisan yang berbeda untuk dijelajahi.</p>
+            <p>Pola-pola ini mengungkapkan yang telah dipelajari model ketika diberikan prompt. Pilih prompt dan lapisan yang berbeda untuk dijelajahi.</p>
         </div>
 
         <div id="controls-container" class="content-block">
@@ -50,6 +60,21 @@
         </div>
 
         <div id="vis-container" class="content-block"></div>
+
+        <div class="explanation-container content-block">
+            <h2>Lapisan vs. Kepala Atensi</h2>
+            <p>
+                Bayangkan sebuah tim analis di gedung multi-lantai yang sedang membedah sebuah dokumen. Setiap <strong>lapisan (layer)</strong> adalah satu lantai, dan setiap <strong>kepala atensi (attention head)</strong> adalah seorang analis spesialis di lantai tersebut.
+            </p>
+            <p>
+                Informasi bergerak secara <strong>sekuensial</strong> dari lantai bawah ke atas. <strong>Lapisan Awal</strong> (lantai bawah) berisi analis junior yang hanya mencari pola-pola sederhana dan lokal, seperti "perhatikan kata sebelumnya". <strong>Lapisan Akhir</strong> (lantai atas) berisi analis senior yang mengambil temuan tersebut untuk membuat kesimpulan semantik yang kompleks.
+            </p>
+            <p>
+                Di setiap lantai, para spesialis bekerja secara <strong>paralel</strong>. Satu kepala atensi mungkin ahli dalam menemukan pola berulang (seperti kepala induksi), sementara kepala lain di lapisan yang sama mungkin ahli dalam menghubungkan subjek dengan kata kerjanya. Bersama-sama, mereka memberikan pemahaman yang kaya pada setiap tingkat pemrosesan.
+            </p>
+        </div>
+
+
     </div>
 
     <footer>

@@ -58,6 +58,16 @@
     border-color: var(--color-ols);
 }
 
+.transformer-diagram-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 2.5em auto;
+    border: 1px solid #e0dccc;
+    border-radius: 8px;
+    background-color: var(--color-surface);
+}
+
 @media (max-width: 768px) {
   #controls-container {
     flex-direction: column;
