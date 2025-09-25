@@ -5,6 +5,7 @@ import re
 import firebase_admin
 from firebase_admin import auth
 from functools import wraps
+import heapq
 
 firebase_admin.initialize_app()
 db = firestore.Client()
@@ -72,17 +73,7 @@ def addSubmission(request):
     transaction = db.transaction()
     update_word_count(transaction, aggregate_ref, text)
 
-    word_counts_doc = aggregate_ref.get()
-    if word_counts_doc.exists:
-        doc_dict = word_counts_doc.to_dict()
-        all_counts = doc_dict.get('counts', {}) if doc_dict else {}
-        sorted_words = sorted(all_counts.items(),
-                              key=lambda item: item[1], reverse=True)
-        word_list = [[word, count] for word, count in sorted_words[:100]]
-    else:
-        word_list = [[text, 1]]
-
-    return jsonify(word_list), 200, get_cors_headers()
+    return jsonify({'status': 'success'}), 200, get_cors_headers()
 
 
 @functions_framework.http
@@ -116,8 +107,8 @@ def getWordCloud(request):
         doc_dict = word_counts_doc.to_dict()
         all_counts = doc_dict.get('counts', {}) if doc_dict else {}
         if all_counts:
-            sorted_words = sorted(all_counts.items(),
-                                  key=lambda item: item[1], reverse=True)
-            word_list = [[word, count] for word, count in sorted_words[:100]]
+            top_words = heapq.nlargest(
+                100, all_counts.items(), key=lambda item: item[1])
+            word_list = [[word, count] for word, count in top_words]
 
     return jsonify(word_list), 200, get_cors_headers()

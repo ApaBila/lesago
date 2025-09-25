@@ -17,13 +17,11 @@ function drawWordCloud(wordList) {
     const canvas = document.getElementById('wordcloud-canvas');
     const submissionView = document.getElementById('submission-view');
     const wordcloudView = document.getElementById('wordcloud-view');
+    const loadingView = document.getElementById('loading-view');
 
-    if (!submissionView || !wordcloudView || !canvas) return;
+    if (!submissionView || !wordcloudView || !canvas || !loadingView) return;
 
     if (wordList && wordList.length > 0) {
-        submissionView.classList.add('hidden');
-        wordcloudView.classList.remove('hidden');
-
         const availableWidth = canvas.parentElement.clientWidth;
         
         if (availableWidth > 0) {
@@ -45,6 +43,10 @@ function drawWordCloud(wordList) {
             maxRotation: 0,
             shuffle: true
         });
+
+        loadingView.classList.add('hidden');
+        submissionView.classList.add('hidden');
+        wordcloudView.classList.remove('hidden');
     }
 }
 
@@ -69,8 +71,14 @@ auth.onAuthStateChanged(async (user) => {
             const mainContainer = document.getElementById('container');
             const submissionView = document.getElementById('submission-view');
             const wordcloudView = document.getElementById('wordcloud-view');
+            const loadingView = document.getElementById('loading-view');
 
             const initializeView = async () => {
+                mainContainer.classList.remove('hidden');
+                loadingView.classList.remove('hidden');
+                submissionView.classList.add('hidden');
+                wordcloudView.classList.add('hidden');
+
                 try {
                     const token = await user.getIdToken();
                     const response = await fetch(`${API_BASE_URL}/getMySubmission`, { headers: { 'Authorization': `Bearer ${token}` } });
@@ -85,15 +93,13 @@ auth.onAuthStateChanged(async (user) => {
                         const wordList = await wordCloudResponse.json();
                         drawWordCloud(wordList);
                     } else {
+                        loadingView.classList.add('hidden');
                         submissionView.classList.remove('hidden');
-                        wordcloudView.classList.add('hidden');
                     }
                 } catch (error) {
                     console.error("Error initializing view:", error);
+                    loadingView.classList.add('hidden');
                     submissionView.classList.remove('hidden');
-                    wordcloudView.classList.add('hidden');
-                } finally {
-                    mainContainer.classList.remove('hidden');
                 }
             };
             initializeView();
@@ -141,12 +147,14 @@ if (submissionForm) {
 
             if (!response.ok) throw new Error('Failed to submit');
             
-            const wordList = await response.json();
+            const wordCloudResponse = await fetch(`${API_BASE_URL}/getWordCloud`);
+            if (!wordCloudResponse.ok) throw new Error('Could not fetch word cloud after submission.');
+            const wordList = await wordCloudResponse.json();
+
             sessionStorage.setItem('wordCloudData', JSON.stringify(wordList));
             drawWordCloud(wordList);
         } catch (error) {
             console.error('Error:', error);
-        } finally {
             submitButton.disabled = false;
             submitButton.textContent = 'Tampilkan';
         }

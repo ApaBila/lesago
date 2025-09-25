@@ -9,7 +9,7 @@ const layerButtons = document.querySelectorAll('.control-btn[data-layer]');
 
 async function loadAndRenderAttention() {
     if (!visContainer) return;
-    visContainer.innerHTML = 'Loading...';
+    visContainer.innerHTML = 'Memproses...';
 
     const filename = `/${currentPrompt}_layer_${currentLayer}_all_heads.json`;
 
