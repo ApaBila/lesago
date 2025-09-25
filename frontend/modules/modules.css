@@ -1,19 +1,25 @@
 .module-container {
-    width: 100%;
-    padding: 20px 40px;
-    box-sizing: border-box;
+    max-width: 1300px;
+    margin: 40px auto;
+    padding: 40px;
+    background: var(--color-surface);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 1px solid #e0dccc;
 }
 
 .module-container h1 {
     text-align: center;
     font-size: 2.8em;
     margin-bottom: 1em;
+    color: var(--color-ols);
 }
 
 .content-block {
     max-width: 720px;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 30px;
 }
 
 .explanation-container {
@@ -34,6 +40,26 @@
 .explanation-container strong {
     color: var(--module-theme-color, var(--color-attention));
     font-weight: 700;
+}
+
+.divider {
+    border-bottom: 1px solid #e0e0e0;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.module-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-top: 20px;
+    margin-top: 40px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.module-nav .footer-logo {
+    margin: 0 20px;
 }
 
 @media (max-width: 768px) {

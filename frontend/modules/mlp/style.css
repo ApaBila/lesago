@@ -1,7 +1,7 @@
 #mlp-container {
     display: flex;
     gap: 20px;
-    background-color: var(--color-surface);
+    background-color: var(--color-background);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
@@ -21,7 +21,7 @@
 .neuron {
     stroke: var(--color-attention);
     stroke-width: 2px;
-    fill: var(--color-surface);
+    fill: var(--color-background);
 }
 
 .link {
@@ -103,8 +103,8 @@
 }
 
 #play-pause-button.playing {
-    background-color: var(--color-ols);
-    color: var(--color-surface);
+    background-color: var(--color-mlp);
+    color: var(--color-background);
 }
 
 .epoch-counter {

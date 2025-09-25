@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jaringan Otak - lesago</title>
+    <title>Meniru Otak - lesago</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +16,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 </head>
-<body id="page-mlp">
+<body id="page-mlp" class="page-module">
     <header>
         <div class="header-title" data-link="../../learning.html">lesago</div>
         <div id="auth-container">
@@ -29,7 +29,7 @@
     </header>
 
     <div class="module-container">
-        <h1 class="content-block">Model II: Meniru Jaringan Otak</h1>
+        <h1 class="content-block">Model 2: Meniru Jaringan Otak</h1>
         
         <div class="explanation-container content-block">
             <h2>Dari Garis Lurus ke Jaringan Kompleks</h2>
@@ -63,11 +63,13 @@
         </div>
     </div>
 
-
-    <footer>
+    <div class="module-nav">
+        <button data-link="../../learning.html">&larr; Lihat Semua Modul</button>
         <img src="../../lesago_logo.png" alt="Lesago Logo" class="footer-logo">
-    </footer>
-    
+        <button data-link="../attention/index.html">Modul Selanjutnya &rarr;</button>
+    </div>
+    </div>
+
     <script type="module" src="../../main.js"></script>
     <script type="module" src="mlp-playground.js"></script>
 </body>

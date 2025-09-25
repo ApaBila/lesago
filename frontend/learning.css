@@ -1,6 +1,6 @@
 #learning-container {
     width: 100%;
-    max-width: 960px;
+    max-width: 1300px;
     padding: 20px 40px;
     box-sizing: border-box;
     text-align: center;
@@ -11,15 +11,6 @@
     color: var(--color-attention);
     margin-top: 0;
     margin-bottom: 3em;
-}
-
-.section-title {
-    font-family: var(--font-heading);
-    font-size: 2.2em;
-    color: var(--color-attention);
-    margin-top: 2.5em;
-    margin-bottom: 1em;
-    text-align: center;
 }
 
 .module-grid {

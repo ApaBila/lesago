@@ -141,10 +141,10 @@ function updateVisuals() {
         sseEl.innerHTML = '<span style="color: red;">Model tidak dapat dihitung karena X tidak bervariasi.</span>';
     } else if (dataPoints.length > 1) {
         regressionLine.push({ x: 0, y: b }, { x: 100, y: m * 100 + b });
-        equationEl.textContent = `Ytopi = ${m.toFixed(2)}X + ${b.toFixed(2)}`;
+        equationEl.textContent = `Ŷ = ${m.toFixed(2)}X + ${b.toFixed(2)}`;
         sseEl.textContent = `Total Error (Jumlah Jarak): ${sae.toFixed(2)}`;
     } else {
-        equationEl.textContent = 'Ytopi = mX + b';
+        equationEl.textContent = 'Ŷ = mX + b';
         sseEl.textContent = 'Tambahkan setidaknya 2 titik untuk menghitung.';
     }
     olsChart.update();
