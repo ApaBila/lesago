@@ -17,22 +17,22 @@ let draggedPointIndex = null;
 
 function calculateOLS(points) {
     const n = points.length;
-    if (n < 2) return { m: 0, b: 0, sae: 0 };
+    if (n < 2) return { m: 0, c: 0, sse: 0 };
     let sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
     for (const p of points) {
         sumX += p.x; sumY += p.y; sumXY += p.x * p.y; sumXX += p.x * p.x;
     }
     const denominator = n * sumXX - sumX * sumX;
     if (Math.abs(denominator) < 1e-9) {
-        return { m: Infinity, b: undefined, sae: Infinity };
+        return { m: Infinity, c: undefined, sse: Infinity };
     }
     const m = (n * sumXY - sumX * sumY) / denominator;
-    const b = (sumY - m * sumX) / n;
-    let sae = 0;
+    const c = (sumY - m * sumX) / n;
+    let sse = 0;
     for (const p of points) {
-        sae += Math.abs(p.y - (m * p.x + b));
+        sse += Math.pow(p.y - (m * p.x + c), 2);
     }
-    return { m, b, sae };
+    return { m, c, sse };
 }
 
 const olsChart = new Chart(olsCanvas.getContext('2d'), {
@@ -61,7 +61,7 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(getCssVariable('--color-background'));
 
 const camera = new THREE.PerspectiveCamera(50, projectionContainer.clientWidth / projectionContainer.clientHeight, 0.1, 1000);
-camera.position.set(5, 4, 10);
+camera.position.set(8, 7, 8);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(projectionContainer.clientWidth, projectionContainer.clientHeight);
@@ -76,24 +76,37 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 0.7);
 directionalLight.position.set(5, 10, 7.5);
 scene.add(directionalLight);
 
-let vectorY, vectorYhat, errorVector, modelPlane;
+let vectorY, vectorYhat, errorVector, modelPlane, rightAngleIndicator;
 
 function createVectorArrow(vector, color, origin = new THREE.Vector3(0, 0, 0)) {
     const length = vector.length();
     if (length < 0.001) return new THREE.Object3D();
     const dir = vector.clone().normalize();
-    return new THREE.ArrowHelper(dir, origin, length, color, length * 0.15, length * 0.07);
+    const headLength = Math.min(length * 0.2, 0.5);
+    const headWidth = headLength * 0.6;
+    return new THREE.ArrowHelper(dir, origin, length, color, headLength, headWidth);
 }
 
+function createRightAngleIndicator(origin, vec1, vec2, size = 0.3) {
+    const normal = new THREE.Vector3().crossVectors(vec1, vec2).normalize();
+    const plane = new THREE.PlaneGeometry(size, size);
+    const material = new THREE.MeshBasicMaterial({ color: 0xd9534f, side: THREE.DoubleSide });
+    const indicator = new THREE.Mesh(plane, material);
+    indicator.position.copy(origin);
+    indicator.lookAt(origin.clone().add(normal));
+    return indicator;
+}
+
+
 function updateProjectionScene(points) {
-    if (vectorY) scene.remove(vectorY, vectorYhat, errorVector, modelPlane);
+    scene.remove(vectorY, vectorYhat, errorVector, modelPlane, rightAngleIndicator);
 
     if (points.length < 3) {
         if(modelPlane) scene.remove(modelPlane);
         return;
     }
     
-    const { m, b } = calculateOLS(points);
+    const { m, c } = calculateOLS(points);
     if (!isFinite(m)) {
         if(modelPlane) scene.remove(modelPlane);
         return;
@@ -101,18 +114,19 @@ function updateProjectionScene(points) {
 
     const xArr = points.map(p => p.x);
     const yArr = points.map(p => p.y);
-    const yHatArr = points.map(p => m * p.x + b);
-
-    const xVec = new THREE.Vector3(xArr[0], xArr[1], xArr[2]).multiplyScalar(0.05);
-    const yVec = new THREE.Vector3(yArr[0], yArr[1], yArr[2]).multiplyScalar(0.05);
-    const yHatVec = new THREE.Vector3(yHatArr[0], yHatArr[1], yHatArr[2]).multiplyScalar(0.05);
+    const yHatArr = points.map(p => m * p.x + c);
+    
+    const scale = 0.08;
+    const xVec = new THREE.Vector3(xArr[0], xArr[1], xArr[2]);
+    const yVec = new THREE.Vector3(yArr[0], yArr[1], yArr[2]).multiplyScalar(scale);
+    const yHatVec = new THREE.Vector3(yHatArr[0], yHatArr[1], yHatArr[2]).multiplyScalar(scale);
 
     vectorY = createVectorArrow(yVec, new THREE.Color(getCssVariable('--color-ols')));
     vectorYhat = createVectorArrow(yHatVec, new THREE.Color('#d9534f'));
     const errorVec3 = new THREE.Vector3().subVectors(yVec, yHatVec);
     errorVector = createVectorArrow(errorVec3, new THREE.Color(getCssVariable('--color-attention')), yHatVec);
     
-    const interceptBasis = new THREE.Vector3(1, 1, 1).normalize();
+    const interceptBasis = new THREE.Vector3(1, 1, 1);
     const planeNormal = new THREE.Vector3().crossVectors(xVec, interceptBasis).normalize();
     
     if (planeNormal.lengthSq() < 1e-9) {
@@ -125,26 +139,24 @@ function updateProjectionScene(points) {
     modelPlane = new THREE.Mesh(planeGeometry, planeMaterial);
     modelPlane.lookAt(planeNormal);
     
-    scene.add(vectorY, vectorYhat, errorVector, modelPlane);
+    rightAngleIndicator = createRightAngleIndicator(yHatVec, errorVec3, yHatVec);
     
-    const lenSqY = yVec.lengthSq();
-    const lenSqYhat = yHatVec.lengthSq();
-    const lenSqError = errorVec3.lengthSq();
+    scene.add(vectorY, vectorYhat, errorVector, modelPlane, rightAngleIndicator);
 }
 
 function updateVisuals() {
-    const { m, b, sae } = calculateOLS(dataPoints);
+    const { m, c, sse } = calculateOLS(dataPoints);
     regressionLine.length = 0;
     
     if (m === Infinity) {
         equationEl.textContent = 'Garis Vertikal Terdeteksi';
         sseEl.innerHTML = '<span style="color: red;">Model tidak dapat dihitung karena X tidak bervariasi.</span>';
     } else if (dataPoints.length > 1) {
-        regressionLine.push({ x: 0, y: b }, { x: 100, y: m * 100 + b });
-        equationEl.textContent = `Ŷ = ${m.toFixed(2)}X + ${b.toFixed(2)}`;
-        sseEl.textContent = `Total Error (Jumlah Jarak): ${sae.toFixed(2)}`;
+        regressionLine.push({ x: 0, y: c }, { x: 100, y: m * 100 + c });
+        equationEl.textContent = `Ŷ = ${m.toFixed(2)}X + ${c.toFixed(2)}`;
+        sseEl.textContent = `Total Kuadrat Error: ${sse.toFixed(2)}`;
     } else {
-        equationEl.textContent = 'Ŷ = mX + b';
+        equationEl.textContent = 'Ŷ = mX + c';
         sseEl.textContent = 'Tambahkan setidaknya 2 titik untuk menghitung.';
     }
     olsChart.update();

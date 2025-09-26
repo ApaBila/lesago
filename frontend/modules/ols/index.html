@@ -34,17 +34,25 @@
         <div class="explanation-container content-block">
             <h2>Selamat datang di dunia dengan lebih dari satu hal!</h2>
             <p>Bagaimana kamu belajar menghitung?</p> 
-            <p>Biasanya dalam <em>satu dimensi</em>. 1 jam... 2 jam... 3 jam... Tapi dunia nyata tidak sesederhana itu. Ada lebih dari satu hal dan kita ingin menghubungkan hal-hal itu satu sama lain.</p>
+            <p>Biasanya dalam <em>satu dimensi</em>.</p>
+            <div class="number-line-container">
+                <div class="number-line"></div>
+                <div class="tick" style="left: 15%;"><span class="number">1 jam</span></div>
+                <div class="tick" style="left: 35%;"><span class="number">2 jam</span></div>
+                <div class="tick" style="left: 55%;"><span class="number">3 jam</span></div>
+                <div class="tick" style="left: 85%;"><span class="number">... dan seterusnya</span></div>
+            </div>
+            <p>Tapi dunia nyata tidak sesederhana itu. Ada lebih dari satu hal dan kita ingin menghubungkan hal-hal itu satu sama lain.</p>
             <p>Misalnya, kalau kamu menambah jam belajar (peubah X) apakah nilai ujianmu (peubah Y) akan bertambah?
             Paling sederhananya, jika kita anggap 1 jam belajar meningkatkan nilai ujian sebesar 1 poin, maka kita bisa menuliskan hubungan ini sebagai <strong>persamaan garis lurus</strong>: </p>
-            <p><code>Ŷ = X</code> dengan <code>m = 1</code> dan <code>b = 0</code>.</p>
+            <p><code>Ŷ = X</code> dengan <code>m = 1</code> dan <code>c = 0</code>.</p>
             <p>Topi kecil di <code>Ŷ</code> berarti nilai ini diramal dari informasi yang ada.</p>
             <p>Mari mencoba menambahkan titik data untuk hubungan tersebut.</p>
         </div>
 
         <div class="equation-box content-block">
             <h3>Persamaan Garis dari Data:</h3>
-            <p id="equation">Ŷ = mX + b</p>
+            <p id="equation">Ŷ = mX + c</p>
             <p id="sse">Tambahkan setidaknya 2 titik untuk menghitung.</p>
         </div>
 
@@ -57,16 +65,61 @@
         <div class="divider content-block"></div>
 
         <div class="explanation-container content-block">
-            <h2>Pandangan Kedua: Proyeksi Vektor</h2>
-            <p>Perhatikan, ada jarak antara ramalan <code>Ŷ</code> (nilai Y di garis) dan kenyataan <code>Y</code> (nilai Y data asli) yang dinamakan <strong>error</strong>. Model yang baik adalah model yang <strong>Total Error</strong>-nya sekecil mungkin.</p>
-            <p>Untuk melihat error ini dengan lebih jelas, kita akan memisahkan titik-titik (X, Y) menjadi vektor X dan vektor Y.</p>
-            <p>Vektor X terdiri dari semua nilai X. Bayangkan semua kombinasi perkalian <code>m</code> terhadap X dan penambahan <code>b</code> ini membentuk sebuah ruang model (<strong>bidang abu-abu</strong>). Vektor Y asli adalah panah coklat. Panah error (<strong>hitam</strong>) akan paling kecil ketika ia <strong>tegak lurus</strong> dengan <strong>bidang abu-abu</strong> itu sendiri. Artinya, prediksi terbaik kita adalah titik di bidang abu-abu yang terdekat dengan ujung panah Y asli.</p>
+            <h2>Pandangan Kedua: Proyeksi Bayangan</h2>
+            <p>Bagaimana cara menemukan garis merah itu sehingga mengikuti pola data? Bayangkan seluruh data Y asli sebagai ujung sebuah pensil (<strong>panah coklat</strong>). Lalu, bayangkan semua kemungkinan jawaban (semua kemungkinan garis lurus, dari perkalian m ke X dan penambahan c) berada di suatu kertas (<strong>bidang abu-abu</strong>).</p>
+            <p>Jika pensil tersebut pas di atas kertas, data kita sempurna! Jika ujung pensil tersebut terangkat dari kertas maka tugas kita adalah menemukan titik di kertas yang *paling dekat* dengan ujung pensil. Titik terdekat ini adalah bayangan pensil jika matahari bersinar tepat dari atas, sehingga bayangannya pas di bawah.</p>
+            <p>Bayangan ini adalah prediksi terbaik kita (<strong>panah merah</strong>). Jarak dari ujung pensil ke bayangannya adalah error (<strong>panah hitam</strong>), garis lurus yang paling kecil dan <strong>tegak lurus</strong> dengan kertas.</p>
         </div>
 
         <div id="projectionScene" class="chart-container content-block"></div>
 
+        <div class="divider content-block"></div>
+        
         <div class="explanation-container content-block">
-            <p>Bahkan jika Xnya lebih dari satu, kita tetap dapat menggunakan intuisi yang sama. Bagaimana caranya menambahkan dan mengalikan semua X tersebut sehingga mendekati Y?</p>
+            <h2>Pertanyaan Lanjutan</h2>
+            <p>Gunakan grafik di atas untuk menjawab pertanyaan-pertanyaan ini:</p>
+            <div style="text-align: left;"> 
+            <ul>
+                <li><strong>Garis Horizontal:</strong> Setelah reset gambar pertama, tambahkan beberapa titik yang membentuk garis horizontal. Apa yang terjadi pada nilai <code>m</code>? Lihatlah gambar kedua, sedekat apa panah coklat (data asli) ke bidang abu-abu?</li>
+                <li><strong>Garis Vertikal:</strong> Sekarang, reset dan coba tambahkan titik-titik dalam satu garis vertikal lurus. Apa yang terjadi pada <code>m</code>?</li>
+            </ul>
+            </div>
+        </div>
+
+        <div class="divider content-block"></div>
+
+        <div class="explanation-container content-block">
+            <h2>Hubungan dengan Jaringan Saraf Tiruan</h2>
+            <p>
+                Model regresi linear berganda sebenarnya dapat dilihat sebagai bentuk paling sederhana dari jaringan saraf tiruan—sebuah neuron tunggal tanpa lapisan tersembunyi dan tanpa fungsi aktivasi non-linear. Setiap peubah input (X) terhubung ke output (Ŷ) dengan sebuah bobot (w), dan ada juga sebuah konstanta (c).
+            </p>
+            <p>Persamaannya adalah: <code>Ŷ = w₁X₁ + w₂X₂ + ... + c</code></p>
+        </div>
+
+        <div class="nn-graph-container content-block">
+            <div id="regression-as-nn-graph">
+                <svg viewBox="0 0 400 200">
+                    <line class="link" x1="80" y1="40" x2="320" y2="100"></line>
+                    <line class="link" x1="80" y1="100" x2="320" y2="100"></line>
+                    <line class="link" x1="80" y1="160" x2="320" y2="100"></line>
+                    
+                    <circle class="neuron" cx="80" cy="40" r="20"></circle>
+                    <text class="node-label" x="80" y="40">X₁</text>
+                    
+                    <circle class="neuron" cx="80" cy="100" r="20"></circle>
+                    <text class="node-label" x="80" y="100">X₂</text>
+                    
+                    <circle class="neuron" cx="80" cy="160" r="20"></circle>
+                    <text class="node-label" x="80" y="160">1</text>
+                    
+                    <circle class="neuron" cx="320" cy="100" r="20"></circle>
+                    <text class="node-label" x="320" y="100">Ŷ</text>
+                    
+                    <text class="weight-label" x="200" y="62">w₁</text>
+                    <text class="weight-label" x="200" y="92">w₂</text>
+                    <text class="weight-label" x="200" y="122">c</text>
+                </svg>
+            </div>
         </div>
 
         <div class="divider content-block"></div>

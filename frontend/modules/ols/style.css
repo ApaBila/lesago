@@ -56,3 +56,92 @@
     cursor: move;
     padding: 0;
 }
+
+.number-line-container {
+    margin: 30px auto 45px;
+    width: 70%;
+    position: relative;
+    height: 30px;
+}
+
+.number-line {
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-ols);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.number-line::after {
+    content: '';
+    position: absolute;
+    right: -2px;
+    top: -4px;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 10px solid var(--color-ols);
+}
+
+.tick {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 20px;
+    background-color: var(--color-ols);
+}
+
+.tick .number {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.9em;
+    white-space: nowrap;
+}
+
+.nn-graph-container {
+    background-color: var(--color-surface);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: 1px solid #e0dccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 250px;
+}
+
+#regression-as-nn-graph svg {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    overflow: visible;
+}
+
+.neuron {
+    stroke: var(--color-attention);
+    stroke-width: 2px;
+    fill: var(--color-background);
+}
+
+.link {
+    stroke: var(--color-mlp);
+    stroke-opacity: 0.8;
+    stroke-width: 1.5px;
+}
+
+.node-label, .weight-label {
+    font-family: monospace;
+    font-size: 16px;
+    fill: var(--color-text);
+    text-anchor: middle;
+    dominant-baseline: central;
+}
+
+.weight-label {
+    font-size: 14px;
+    font-style: italic;
+    fill: var(--color-mlp);
+}
