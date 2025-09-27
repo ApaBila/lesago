@@ -121,3 +121,28 @@
         flex-direction: column;
     }
 }
+
+.layer-label {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    fill: var(--color-text);
+    text-anchor: middle;
+    pointer-events: none;
+    dominant-baseline: hanging;
+}
+
+.weight-label, .bias-label {
+    font-family: monospace;
+    font-size: 10px;
+    fill: var(--color-mlp);
+    text-anchor: middle;
+    pointer-events: none;
+}
+
+.activation-label {
+    font-family: monospace;
+    font-size: 10px;
+    fill: var(--color-attention);
+    text-anchor: middle;
+    pointer-events: none;
+}

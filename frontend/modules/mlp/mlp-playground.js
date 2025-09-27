@@ -5,9 +5,9 @@ function getCssVariable(variableName) {
 }
 
 let networkArchitecture = [
-    { type: 'input', count: 2 },
-    { type: 'hidden', count: 8 },
-    { type: 'output', count: 1 }
+    { type: 'input', count: 2, label: 'Input' },
+    { type: 'hidden', count: 8, label: 'Hidden', activation: 'tanh' },
+    { type: 'output', count: 1, label: 'Output', activation: 'tanh' }
 ];
 let weights;
 let isTraining = false;
@@ -27,7 +27,7 @@ const dataSvg = dataVizContainer.append("svg").attr("viewBox", `0 0 ${vizSize} $
 const heatmapGroup = dataSvg.append('g');
 const pointsGroup = dataSvg.append('g');
 
-const networkSvg = networkVizContainer.append("svg").attr("viewBox", `0 0 ${vizSize} ${vizSize}`);
+const networkSvg = networkVizContainer.append("svg").attr("viewBox", `0 -20 ${vizSize} ${vizSize + 40}`);
     
 const colorScale = d3.scaleDiverging([-1, 0, 1], ["rgba(143, 151, 121, 0.5)", getCssVariable('--color-background'), getCssVariable('--color-mlp')]);
 const xScale = d3.scaleLinear().domain([-5, 5]).range([0, vizSize]);
@@ -158,10 +158,19 @@ function calculateNodePositions(architecture) {
     const nodes = [];
     const layerGap = vizSize / (architecture.length);
     let cumulativeX = layerGap / 2;
+    const topMargin = 30;
+
     architecture.forEach((layer, i) => {
         const layerNodes = [];
-        const yPosition = d3.scalePoint().domain(d3.range(layer.count)).range([0, vizSize]).padding(0.6);
-        for (let j = 0; j < layer.count; j++) { layerNodes.push({ x: cumulativeX, y: yPosition(j) }); }
+        const yPosition = d3.scalePoint().domain(d3.range(layer.count)).range([topMargin, vizSize - (nodeRadius * 2)]).padding(0.6);
+        for (let j = 0; j < layer.count; j++) { 
+            layerNodes.push({ 
+                x: cumulativeX, 
+                y: yPosition(j),
+                layerIndex: i,
+                nodeIndex: j
+            }); 
+        }
         nodes.push(layerNodes);
         cumulativeX += layerGap;
     });
@@ -185,12 +194,48 @@ function drawNetwork() {
     const nodePositions = calculateNodePositions(networkArchitecture);
     const links = generateLinks(nodePositions);
     const flattenedNodes = nodePositions.flat();
+
     networkSvg.append("g").selectAll("line").data(links).join("line")
         .attr("class", "link").attr("x1", d => d.source.x).attr("y1", d => d.source.y)
         .attr("x2", d => d.target.x).attr("y2", d => d.target.y).attr("stroke-width", 1);
-    networkSvg.append("g").selectAll("circle").data(flattenedNodes).join("circle")
-        .attr("class", "neuron").attr("cx", d => d.x).attr("cy", d => d.y)
+    
+    networkSvg.append("g").selectAll("text").data(links).join("text")
+        .attr("class", "weight-label")
+        .attr("x", d => d.source.x * 0.7 + d.target.x * 0.3)
+        .attr("y", d => d.source.y * 0.7 + d.target.y * 0.3)
+        .text("w");
+
+    const nodeGroups = networkSvg.append("g").selectAll("g").data(flattenedNodes).join("g");
+    
+    nodeGroups.append("circle")
+        .attr("class", "neuron")
+        .attr("cx", d => d.x).attr("cy", d => d.y)
         .attr("r", nodeRadius);
+
+    nodeGroups.filter(d => d.layerIndex > 0).append("text")
+        .attr("class", "bias-label")
+        .attr("x", d => d.x)
+        .attr("y", d => d.y - nodeRadius - 3)
+        .text("b");
+
+    nodeGroups.filter(d => networkArchitecture[d.layerIndex].activation).append("text")
+        .attr("class", "activation-label")
+        .attr("x", d => d.x)
+        .attr("y", d => d.y)
+        .attr("dy", "0.35em")
+        .text(d => networkArchitecture[d.layerIndex].activation);
+    
+    nodePositions.forEach((layerNodes, i) => {
+        if (layerNodes.length > 0) {
+            const layerInfo = networkArchitecture[i];
+            const xPos = layerNodes[0].x;
+            networkSvg.append("text")
+                .attr("class", "layer-label")
+                .attr("x", xPos)
+                .attr("y", 0)
+                .text(layerInfo.label || layerInfo.type);
+        }
+    });
 }
 
 function drawControls() {
@@ -205,7 +250,13 @@ function drawControls() {
             buttonGroup.append("button").attr("class", "neuron-button").text("-").on("click", () => { if (layer.count > 1) { layer.count--; update(); } });
             buttonGroup.append("span").attr("class", "neuron-count").text(`${layer.count} neuron`);
             buttonGroup.append("button").attr("class", "neuron-button").text("+").on("click", () => { if (layer.count < 10) { layer.count++; update(); } });
-            buttonGroup.append("button").attr("class", "remove-layer-button").html("&times;").on("click", () => { networkArchitecture.splice(i, 1); update(); });
+            buttonGroup.append("button").attr("class", "remove-layer-button").html("&times;").on("click", () => { 
+                const hiddenLayers = networkArchitecture.filter(l => l.type === 'hidden').length;
+                if (hiddenLayers > 1) {
+                    networkArchitecture.splice(i, 1);
+                    update();
+                }
+            });
         }
     });
 
@@ -215,7 +266,7 @@ function drawControls() {
     mainActions.append("button").attr("id", "add-layer-button").text("Tambah Lapisan Tersembunyi").on("click", () => {
         const outputLayerIndex = networkArchitecture.findIndex(l => l.type === 'output');
         if (networkArchitecture.length - 2 < 5) {
-             networkArchitecture.splice(outputLayerIndex, 0, { type: 'hidden', count: 3 });
+             networkArchitecture.splice(outputLayerIndex, 0, { type: 'hidden', count: 3, label: 'Hidden', activation: 'tanh' });
              update();
         }
     });
